@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from 'axios';
 import AddIcon from '@mui/icons-material/Add';
 import Fab from '@mui/material/Fab';
 import Zoom from '@mui/material/Zoom';
@@ -10,6 +11,8 @@ function CreateArea(props) {
     title: "",
     content: ""
   });
+
+  
 
   const showInput = () => {
     setExpanded(true);
@@ -28,7 +31,8 @@ function CreateArea(props) {
 
   function submitNote(event) {
     props.onAdd(note);
-    setNote({
+    axios.post('http://localhost:5000/notes/add', note).then(res => console.log(res.data));
+    setNote({ 
       title: "",
       content: ""
     });
@@ -55,7 +59,7 @@ function CreateArea(props) {
           rows={isExpanded ? 3 : 1}
         />
         <Zoom in={isExpanded}>
-          <Fab onClick={submitNote} ><AddIcon /></Fab>
+            <Fab onClick={submitNote} ><AddIcon /></Fab>
         </Zoom>
       </form>
     </div>
