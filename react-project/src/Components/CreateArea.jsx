@@ -29,9 +29,11 @@ function CreateArea(props) {
     });
   }
 
-  function submitNote(event) {
-    props.onAdd(note);
-    axios.post('http://localhost:5000/notes/add', note).then(res => console.log(res.data));
+  const submitNote = async (event) => {
+    const newNote = await axios.post('http://localhost:5000/notes/add', note);
+    console.log(newNote);
+    props.onAdd(newNote);
+    
     setNote({ 
       title: "",
       content: ""
